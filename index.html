@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thể tích chất lỏng trong hình trụ nằm ngang.</title>
+  <style>
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 20px 0;
+      }
+      th, td {
+          padding: 8px;
+          text-align: center;
+          border: 1px solid #ddd;
+      }
+      th {
+          background-color: #f2f2f2;
+      }
+  </style>
+</head>
+<body>
+<h1>Thể tích chất lỏng trong hình trụ nằm ngang. L = 6m, D=2.5m</h1>
+<table id="volumeTable">
+  <thead>
+  <tr>
+    <th>Chiều cao (m)</th>
+    <th>Thể tích chất lỏng (m³)</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- Bảng thể tích sẽ được thêm vào đây -->
+  </tbody>
+</table>
+
+<script>
+  // Thông số của hình trụ
+  const R = 1.25; // bán kính hình trụ (m)
+  const L = 6; // chiều dài hình trụ (m)
+
+  // Hàm tính thể tích chất lỏng theo chiều cao h
+  function calculateVolume(h) {
+    // Tính góc θ
+    const theta = 2 * Math.acos((R - h) / R);
+
+    // Tính diện tích phần chất lỏng A_liquid
+    const A_liquid = (R * R / 2) * (theta - Math.sin(theta));
+
+    // Tính thể tích chất lỏng V_liquid = A_liquid * L
+    return A_liquid * L;
+  }
+
+  // Tạo bảng thể tích từ 0 đến 2.5 m với bước nhảy 0.1 m
+  function generateVolumeTable() {
+    const tableBody = document.getElementById('volumeTable').getElementsByTagName('tbody')[0];
+
+    for (let i = 0; i <= 25; i++) {
+      const h = i/10
+      const volume = calculateVolume(h).toFixed(3); // làm tròn đến 3 chữ số thập phân
+      const row = document.createElement('tr');
+
+      const cellHeight = document.createElement('td');
+      cellHeight.textContent = h.toFixed(1); // chiều cao với 1 chữ số thập phân
+      row.appendChild(cellHeight);
+
+      const cellVolume = document.createElement('td');
+      cellVolume.textContent = volume; // thể tích
+      row.appendChild(cellVolume);
+
+      tableBody.appendChild(row);
+    }
+  }
+
+  // Gọi hàm để tạo bảng
+  generateVolumeTable();
+</script>
+</body>
+</html>
